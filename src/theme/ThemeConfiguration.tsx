@@ -1,7 +1,13 @@
 import { createTheme, ThemeProvider } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import Cookies from 'js-cookie'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { createContext } from 'react'
 
 export type CustomPalete = {
@@ -48,6 +54,8 @@ type ThemeConfigurationPropsType = {
 export const ThemeConfigContext = createContext<{
   handleChangeTheme?: (theme: ThemeNameType) => void
 }>({})
+
+export const useThemeConfigContext = () => useContext(ThemeConfigContext)
 
 const ThemeConfigProvider = ({
   children,
