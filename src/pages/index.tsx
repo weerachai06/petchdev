@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 // import { signIn, signOut, useSession } from "next-auth/react";
-import { LightMode as LightModIcon } from '@mui/icons-material'
+import { LightMode as LightModeIcon } from '@mui/icons-material'
 
 import { api } from "~/utils/api";
 import Badges, { type TBadge } from "~/components/introduction/Badge";
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   const badges = useMemo<TBadge[]>(() => {
-    const randomText = () => (Math.random() + 1).toString(36).substring(7);
+    const randomText = () => (Math.random() + 1).toString(36).substring(8);
     return [{
       alt: 'Typescript',
       id: randomText(),
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         <div className="fixed top-4 right-4">
           <button className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20">
             {/* <DarkModIcon color="primary"/> */}
-            <LightModIcon className="text-white/80"/>
+            <LightModeIcon className="text-white/80"/>
           </button>
         </div>
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
@@ -53,10 +53,7 @@ const Home: NextPage = () => {
               <div className="text-lg">
               Hi, My name is Petch 👋
               </div>
-              <p className="text-md">
-              I am Frontent Delveloper at King Power Click
-              </p>
-              <ul>
+              <ul className="text-sm">
                 <li>
                 🔭 I’m currently working on King Power Click
                 </li>

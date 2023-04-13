@@ -12,6 +12,9 @@ type TBadegesProps = {
 }
 
 export default function Badges({ badges }: TBadegesProps) {
+  if(!Array.isArray(badges)) {
+    return <></>
+  }
   return (
     <>
       {badges?.map((badge) => {

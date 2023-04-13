@@ -1,5 +1,5 @@
 import { type AppProps } from "next/app";
-import { type Session } from "next-auth";
+// import { type Session } from "next-auth";
 // import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
@@ -41,17 +41,18 @@ const theme = createTheme({
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
-  pageProps: {
-    session: Session | null
-  }
+  // pageProps: {
+  //   session: Session | null
+  // }
 }
 
 const MyApp = ({
   Component,
+  emotionCache = clientSideEmotionCache,
   pageProps: { ...pageProps },
 }: MyAppProps) => {
   return (
-    <CacheProvider value={clientSideEmotionCache}>
+    <CacheProvider value={emotionCache}>
       {/* <SessionProvider session={session}> */}
         <ThemeProvider theme={theme}>
         <CssBaseline />
