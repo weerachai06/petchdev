@@ -1,19 +1,64 @@
-import { type AppType } from "next/app";
+import { type AppProps } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import createEmotionCache from "~/config/createEmotionCache";
+import { CacheProvider, type EmotionCache } from '@emotion/react';
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
+const clientSideEmotionCache = createEmotionCache();
+
+import { Roboto } from 'next/font/google';
+import { createTheme } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 import "~/styles/globals.css";
 
-const MyApp: AppType<{ session: Session | null }> = ({
+export const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
+});
+
+// Create a theme instance.
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#556cd6',
+    },
+    secondary: {
+      main: '#19857b',
+    },
+    error: {
+      main: red.A400,
+    },
+  },
+  typography: {
+    fontFamily: roboto.style.fontFamily,
+  },
+});
+
+export interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+  pageProps: {
+    session: Session | null
+  }
+}
+
+const MyApp = ({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
+}: MyAppProps) => {
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <CacheProvider value={clientSideEmotionCache}>
+      <SessionProvider session={session}>
+        <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+        </ThemeProvider>
+      </SessionProvider>
+    </CacheProvider>
   );
 };
 
