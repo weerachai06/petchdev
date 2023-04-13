@@ -23,6 +23,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.56.0
   '@typescript-eslint/parser': ^5.56.0
   autoprefixer: ^10.4.14
+  clsx: ^1.2.1
   eslint: ^8.36.0
   eslint-config-next: ^13.2.4
   next: ^13.2.4
@@ -53,6 +54,7 @@ dependencies:
   '@trpc/next': 10.19.1_brmydnwrizpgjft6d7ohjrzcni
   '@trpc/react-query': 10.19.1_zpqtk3y2uzj77l3q37qlnsrmye
   '@trpc/server': 10.19.1
+  clsx: 1.2.1
   next: 13.3.0_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.22.0_yucv4tfv7v7nrkw2uguegj6e7e
   react: 18.2.0
