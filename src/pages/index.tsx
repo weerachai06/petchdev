@@ -5,9 +5,24 @@ import Link from "next/link";
 import { LightMode as LightModIcon } from '@mui/icons-material'
 
 import { api } from "~/utils/api";
+import Badges, { type TBadge } from "~/components/introduction/Badge";
+import { useMemo } from "react";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
+
+  const badges = useMemo<TBadge[]>(() => {
+    const randomText = () => (Math.random() + 1).toString(36).substring(7);
+    return [{
+      alt: 'Typescript',
+      id: randomText(),
+      image: 'https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white'
+    }, {
+      alt: 'JavaScript',
+      id: randomText(),
+      image: 'https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E'
+    }]
+  }, [])
 
   return (
     <>
@@ -50,6 +65,11 @@ const Home: NextPage = () => {
                 </li>
               </ul>
             </Link>
+          </div>
+          <div className="inline-flex text-center gap-2">
+            <Badges
+              badges={badges}
+            />
           </div>
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">

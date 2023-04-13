@@ -18,5 +18,17 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    dangerouslyAllowSVG: true,
+    formats: ['image/avif', 'image/webp', ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.shields.io',
+        port: '',
+        pathname: '/badge/**',
+      },
+    ],
+  },
 };
 export default config;

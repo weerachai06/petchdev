@@ -82,7 +82,6 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style) => {
-    console.log('style 💋',style.css)
     return (<style
         data-emotion={`${style.key} ${style.ids.join(' ')}`}
         key={style.key}
