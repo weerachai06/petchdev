@@ -4,6 +4,8 @@ const config = {
   endOfLine: "lf",
   tabWidth: 2,
   printWidth: 80,
+  singleQuote: true,
+  semi: false,
 };
 
 module.exports = config;
