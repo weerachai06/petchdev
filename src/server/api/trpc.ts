@@ -34,11 +34,11 @@ type CreateContextOptions = {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions & CreateNextContextOptions) => {
+const createInnerTRPCContext = (
+  _opts: CreateContextOptions & CreateNextContextOptions
+) => {
   return {
-    // session: opts.session,
     prisma,
-    ...opts,
   };
 };
 
@@ -49,7 +49,6 @@ const createInnerTRPCContext = (opts: CreateContextOptions & CreateNextContextOp
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (opts: CreateNextContextOptions) => {
-
   // console.log(req, res)
 
   // Get the session from the server using the getServerSession wrapper function
@@ -57,7 +56,7 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
 
   return createInnerTRPCContext({
     // session,
-    ...opts
+    ...opts,
   });
 };
 
@@ -68,7 +67,7 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-import { initTRPC, /* TRPCError */ } from "@trpc/server";
+import { initTRPC /* TRPCError */ } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 

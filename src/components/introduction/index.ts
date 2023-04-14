@@ -1,2 +1,2 @@
-export { default as Badges } from './Badge'
-export type { TBadge } from './Badge'
+export { default as Badges } from "./Badge";
+export type { TBadge } from "./Badge";

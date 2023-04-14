@@ -1,5 +1,5 @@
-import * as React from 'react';
-import Document from 'next/document';
+import * as React from "react";
+import Document from "next/document";
 import {
   Html,
   Head,
@@ -7,11 +7,11 @@ import {
   NextScript,
   type DocumentProps,
   type DocumentContext,
-} from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
-import { type AppType } from 'next/app';
-import { type MyAppProps } from './_app';
-import createEmotionCache from '~/config/createEmotionCache';
+} from "next/document";
+import createEmotionServer from "@emotion/server/create-instance";
+import { type AppType } from "next/app";
+import { type MyAppProps } from "./_app";
+import createEmotionCache from "~/config/createEmotionCache";
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
@@ -33,7 +33,6 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
     </Html>
   );
 }
-
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
@@ -65,14 +64,16 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
   const cache = createEmotionCache();
-  const { 
+  const {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     extractCriticalToChunks,
   } = createEmotionServer(cache);
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>) =>
+      enhanceApp: (
+        App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>
+      ) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
         },
@@ -83,14 +84,15 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style) => {
-    return (<style
-        data-emotion={`${style.key} ${style.ids.join(' ')}`}
+    return (
+      <style
+        data-emotion={`${style.key} ${style.ids.join(" ")}`}
         key={style.key}
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: style.css }}
-      />)
+      />
+    );
   });
-  
 
   return {
     ...initialProps,
