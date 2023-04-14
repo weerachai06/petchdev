@@ -16,6 +16,7 @@ specifiers:
   '@trpc/react-query': ^10.18.0
   '@trpc/server': ^10.18.0
   '@types/eslint': ^8.21.3
+  '@types/js-cookie': ^3.0.3
   '@types/node': ^18.15.5
   '@types/prettier': ^2.7.2
   '@types/react': ^18.0.28
@@ -26,6 +27,7 @@ specifiers:
   clsx: ^1.2.1
   eslint: ^8.36.0
   eslint-config-next: ^13.2.4
+  js-cookie: ^3.0.1
   next: ^13.2.4
   next-auth: ^4.21.0
   postcss: ^8.4.21
@@ -55,6 +57,7 @@ dependencies:
   '@trpc/react-query': 10.19.1_zpqtk3y2uzj77l3q37qlnsrmye
   '@trpc/server': 10.19.1
   clsx: 1.2.1
+  js-cookie: 3.0.1
   next: 13.3.0_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.22.0_yucv4tfv7v7nrkw2uguegj6e7e
   react: 18.2.0
@@ -64,6 +67,7 @@ dependencies:
 
 devDependencies:
   '@types/eslint': 8.37.0
+  '@types/js-cookie': 3.0.3
   '@types/node': 18.15.11
   '@types/prettier': 2.7.2
   '@types/react': 18.0.35
@@ -792,6 +796,10 @@ packages:
 
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
+    dev: true
+
+  /@types/js-cookie/3.0.3:
+    resolution: {integrity: sha512-Xe7IImK09HP1sv2M/aI+48a20VX+TdRJucfq4vfRVy6nWN8PYPOEnlMRSgxJAgYQIXJVL8dZ4/ilAM7dWNaOww==}
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -2364,6 +2372,11 @@ packages:
 
   /jose/4.13.2:
     resolution: {integrity: sha512-GMUKtV+l05F6NY/06nM7rucHM6Ktvw6sxnyRqINBNWS/hCM/bBk7kanOEckRP8xtC/jzuGfTRVZvkjjuy+g4dA==}
+    dev: false
+
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
     dev: false
 
   /js-sdsl/4.4.0:
