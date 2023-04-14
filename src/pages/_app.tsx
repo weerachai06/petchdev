@@ -66,7 +66,7 @@ const MyApp = ({
   pageProps: { cookies, ...pageProps },
 }: MyAppPropsWithPageProps) => {
   const [themeValue, setThemeValue] = useState<TThemeValue>(() => {
-    if (!('theme' in cookies)) {
+    if (!cookies || !('theme' in cookies)) {
       return 'light'
     }
     return cookies?.['theme'] ?? 'light'
