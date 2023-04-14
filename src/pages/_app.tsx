@@ -1,4 +1,4 @@
-import { type AppProps } from 'next/app'
+import * as app from 'next/app'
 import { api } from '~/utils/api'
 import createEmotionCache from '~/config/createEmotionCache'
 import { CacheProvider, type EmotionCache } from '@emotion/react'
@@ -12,7 +12,7 @@ import { red } from '@mui/material/colors'
 import '~/styles/globals.css'
 import { getCookieParser } from 'next/dist/server/api-utils'
 import Cookies from 'js-cookie'
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useMemo, useState } from 'react'
 
 type TThemeCallback = (theme: 'dark' | 'light') => void
 
@@ -40,7 +40,7 @@ const theme = createTheme({
   },
 })
 
-export interface MyAppProps extends AppProps {
+export interface MyAppProps extends app.AppProps {
   emotionCache?: EmotionCache
 }
 
@@ -65,31 +65,31 @@ const MyApp = ({
   emotionCache = clientSideEmotionCache,
   pageProps: { cookies, ...pageProps },
 }: MyAppPropsWithPageProps) => {
-  Component.getInitialProps = (context) => {
-    const cookies = context.req
-      ? getCookieParser(context.req?.headers)()
-      : Cookies.get()
-    return {
-      cookies,
+  const [themeValue, setThemeValue] = useState<TThemeValue>(() => {
+    if (!('theme' in cookies)) {
+      return 'light'
     }
-  }
+    return cookies?.['theme'] ?? 'light'
+  })
 
-  const [themeValue, setThemeValue] = useState<'dark' | 'light'>('light')
-
-  useEffect(() => {
-    setThemeValue(cookies?.['theme'] ?? 'light')
-  }, [cookies])
-
-  const setThemeCallback = useCallback((theme: 'dark' | 'light'): void => {
-    Cookies.set('theme', theme)
-    setThemeValue(theme)
+  const setThemeCallback = useCallback((theme: TThemeValue): void => {
+    setThemeValue((currentTheme) => {
+      try {
+        Cookies.set('theme', theme)
+        return theme
+      } catch (error) {
+        console.error('Cannot set theme into cookie storage')
+        return currentTheme
+      }
+    })
   }, [])
+
   const globalTheme = useMemo(
     () => ({
       theme: themeValue,
       setTheme: setThemeCallback,
     }),
-    [themeValue, setThemeCallback]
+    [setThemeCallback, themeValue]
   )
 
   return (
@@ -102,6 +102,20 @@ const MyApp = ({
       </AppContext.Provider>
     </CacheProvider>
   )
+}
+
+MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
+  let pageProps = {}
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx)
+  }
+  const cookies = ctx.req ? getCookieParser(ctx.req?.headers)() : Cookies.get()
+  return {
+    pageProps: {
+      ...pageProps,
+      cookies,
+    },
+  }
 }
 
 export default api.withTRPC(MyApp)
