@@ -10,7 +10,7 @@ import { Roboto } from 'next/font/google'
 import { createTheme } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 import '~/styles/globals.css'
-import { getCookieParser } from 'next/dist/server/api-utils'
+// import { getCookieParser } from 'next/dist/server/api-utils'
 import Cookies from 'js-cookie'
 import { createContext, useCallback, useMemo, useState } from 'react'
 
@@ -104,7 +104,7 @@ const MyApp = ({
   )
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
+/* MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
   let pageProps = {}
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx)
@@ -116,6 +116,6 @@ MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
       cookies,
     },
   }
-}
+} */
 
 export default api.withTRPC(MyApp)
