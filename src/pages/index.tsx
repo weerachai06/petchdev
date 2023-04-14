@@ -5,11 +5,13 @@ import { LightMode as LightModeIcon } from '@mui/icons-material'
 import { DarkMode as DarkModeIcon } from '@mui/icons-material'
 
 import Badges, { type TBadge } from '~/components/introduction/Badge'
-import { useMemo, useState } from 'react'
+import { useContext, useMemo } from 'react'
 import clsx from 'clsx'
+import { AppContext } from './_app'
 
 const Home: NextPage = () => {
-  const [theme] = useState<'dark' | 'light'>('light')
+  const themeContext = useContext(AppContext)
+  // const [themeContext.theme] = useState<'dark' | 'light'>('light')
   const badges = useMemo<TBadge[]>(() => {
     const randomId = () => (Math.random() + 1).toString(36).substring(8)
     return [
@@ -35,8 +37,8 @@ const Home: NextPage = () => {
   }, [])
 
   function handleChangeTheme() {
-    // const toggleTheme = theme === 'dark' ? 'light': 'dark'
-    // return cookieMutation.mutate({ mode: toggleTheme });
+    const toggleTheme = themeContext.theme === 'dark' ? 'light' : 'dark'
+    return themeContext.setTheme(toggleTheme)
   }
 
   return (
@@ -54,12 +56,12 @@ const Home: NextPage = () => {
           'justify-center',
           'bg-gradient-to-b',
           {
-            'from-[#000000]': theme === 'dark',
-            'to-[#15162c]': theme === 'dark',
+            'from-[#000000]': themeContext.theme === 'dark',
+            'to-[#15162c]': themeContext.theme === 'dark',
           },
           {
-            'from-slate-50': theme === 'light',
-            'to-slate-100': theme === 'light',
+            'from-slate-50': themeContext.theme === 'light',
+            'to-slate-100': themeContext.theme === 'light',
           }
         )}
       >
@@ -73,19 +75,19 @@ const Home: NextPage = () => {
               'no-underline',
               'transition',
               {
-                'text-white': theme === 'dark',
-                'bg-white/10': theme === 'dark',
-                'hover:bg-white/20': theme === 'dark',
+                'text-white': themeContext.theme === 'dark',
+                'bg-white/10': themeContext.theme === 'dark',
+                'hover:bg-white/20': themeContext.theme === 'dark',
               },
               {
-                'text-black': theme === 'light',
-                'bg-black/10': theme === 'light',
-                'hover:bg-black/20': theme === 'light',
+                'text-black': themeContext.theme === 'light',
+                'bg-black/10': themeContext.theme === 'light',
+                'hover:bg-black/20': themeContext.theme === 'light',
               }
             )}
             onClick={() => handleChangeTheme()}
           >
-            {theme === 'dark' ? (
+            {themeContext.theme === 'dark' ? (
               <LightModeIcon className="text-white/80" />
             ) : (
               <DarkModeIcon className="text-black/80" />
@@ -100,15 +102,15 @@ const Home: NextPage = () => {
               'tracking-tight',
               'sm:text-[5rem]',
               {
-                'text-white': theme === 'dark',
-                'text-black/80': theme === 'light',
+                'text-white': themeContext.theme === 'dark',
+                'text-black/80': themeContext.theme === 'light',
               }
             )}
           >
             <span
               className={clsx({
-                'text-[hsl(31,100%,64%)]': theme === 'dark',
-                'text-[hsl(31,71%,59%)]': theme === 'light',
+                'text-[hsl(31,100%,64%)]': themeContext.theme === 'dark',
+                'text-[hsl(31,71%,59%)]': themeContext.theme === 'light',
               })}
             >
               Petch
@@ -125,12 +127,12 @@ const Home: NextPage = () => {
                 'rounded-xl',
                 'p-4',
                 {
-                  'bg-white/10': theme === 'dark',
-                  'text-white': theme === 'dark',
-                  'hover:bg-white/20': theme === 'dark',
-                  'bg-black/10': theme === 'light',
-                  'text-black': theme === 'light',
-                  'hover:bg-black/20': theme === 'light',
+                  'bg-white/10': themeContext.theme === 'dark',
+                  'text-white': themeContext.theme === 'dark',
+                  'hover:bg-white/20': themeContext.theme === 'dark',
+                  'bg-black/10': themeContext.theme === 'light',
+                  'text-black': themeContext.theme === 'light',
+                  'hover:bg-black/20': themeContext.theme === 'light',
                 }
               )}
               href="https://github.com/weerachai06"

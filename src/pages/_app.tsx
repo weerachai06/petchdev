@@ -10,6 +10,11 @@ import { Roboto } from 'next/font/google'
 import { createTheme } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 import '~/styles/globals.css'
+import { getCookieParser } from 'next/dist/server/api-utils'
+import Cookies from 'js-cookie'
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+
+type TThemeCallback = (theme: 'dark' | 'light') => void
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -39,17 +44,62 @@ export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
 
+type TThemeValue = 'light' | 'dark'
+
+interface MyAppPropsWithPageProps extends MyAppProps {
+  pageProps: {
+    cookies: Record<string, TThemeValue>
+  }
+}
+
+export const AppContext = createContext<{
+  theme: TThemeValue
+  setTheme: TThemeCallback
+}>({
+  theme: 'light',
+  setTheme: (_) => undefined,
+})
+
 const MyApp = ({
   Component,
   emotionCache = clientSideEmotionCache,
-  pageProps: { ...pageProps },
-}: MyAppProps) => {
+  pageProps: { cookies, ...pageProps },
+}: MyAppPropsWithPageProps) => {
+  Component.getInitialProps = (context) => {
+    const cookies = context.req
+      ? getCookieParser(context.req?.headers)()
+      : Cookies.get()
+    return {
+      cookies,
+    }
+  }
+
+  const [themeValue, setThemeValue] = useState<'dark' | 'light'>('light')
+
+  useEffect(() => {
+    setThemeValue(cookies?.['theme'] ?? 'light')
+  }, [cookies])
+
+  const setThemeCallback = useCallback((theme: 'dark' | 'light'): void => {
+    Cookies.set('theme', theme)
+    setThemeValue(theme)
+  }, [])
+  const globalTheme = useMemo(
+    () => ({
+      theme: themeValue,
+      setTheme: setThemeCallback,
+    }),
+    [themeValue, setThemeCallback]
+  )
+
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <AppContext.Provider value={globalTheme}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </AppContext.Provider>
     </CacheProvider>
   )
 }
