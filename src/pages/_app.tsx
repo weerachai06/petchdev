@@ -1,30 +1,30 @@
-import { type AppProps } from "next/app";
-import { api } from "~/utils/api";
-import createEmotionCache from "~/config/createEmotionCache";
-import { CacheProvider, type EmotionCache } from "@emotion/react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { type AppProps } from 'next/app'
+import { api } from '~/utils/api'
+import createEmotionCache from '~/config/createEmotionCache'
+import { CacheProvider, type EmotionCache } from '@emotion/react'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 
-const clientSideEmotionCache = createEmotionCache();
+const clientSideEmotionCache = createEmotionCache()
 
-import { Roboto } from "next/font/google";
-import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
-import "~/styles/globals.css";
+import { Roboto } from 'next/font/google'
+import { createTheme } from '@mui/material/styles'
+import { red } from '@mui/material/colors'
+import '~/styles/globals.css'
 
 export const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
+})
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: '#556cd6',
     },
     secondary: {
-      main: "#19857b",
+      main: '#19857b',
     },
     error: {
       main: red.A400,
@@ -33,10 +33,10 @@ const theme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
-});
+})
 
 export interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
+  emotionCache?: EmotionCache
 }
 
 const MyApp = ({
@@ -51,7 +51,7 @@ const MyApp = ({
         <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
-  );
-};
+  )
+}
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(MyApp)

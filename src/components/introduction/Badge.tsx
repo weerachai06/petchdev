@@ -1,19 +1,19 @@
-import Image from "next/image";
-import React from "react";
+import Image from 'next/image'
+import React from 'react'
 
 export type TBadge = {
-  image: string;
-  id: string;
-  alt: string;
-};
+  image: string
+  id: string
+  alt: string
+}
 
 type TBadegesProps = {
-  badges?: TBadge[];
-};
+  badges?: TBadge[]
+}
 
 export default function Badges({ badges }: TBadegesProps) {
   if (!Array.isArray(badges)) {
-    return <></>;
+    return <></>
   }
   return (
     <>
@@ -26,8 +26,8 @@ export default function Badges({ badges }: TBadegesProps) {
             alt={badge.alt}
             key={badge.id}
           />
-        );
+        )
       })}
     </>
-  );
+  )
 }
