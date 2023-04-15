@@ -12,8 +12,7 @@ import { red } from '@mui/material/colors'
 import '~/styles/globals.css'
 // import { getCookieParser } from 'next/dist/server/api-utils'
 import Cookies from 'js-cookie'
-import { createContext, useCallback, useMemo, useState } from 'react'
-import { getCookieParser } from 'next/dist/server/api-utils'
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 
 type TThemeCallback = (theme: 'dark' | 'light') => void
 
@@ -73,6 +72,8 @@ const MyApp = ({
     return cookies?.['theme'] ?? 'light'
   })
 
+  const [mounted, setMounted] = useState(false)
+
   const setThemeCallback = useCallback((theme: TThemeValue): void => {
     setThemeValue((currentTheme) => {
       try {
@@ -85,6 +86,15 @@ const MyApp = ({
     })
   }, [])
 
+  useEffect(() => {
+    const newTheme = Cookies.get('theme')
+    if (!newTheme) {
+      return
+    }
+    return setThemeValue(newTheme as TThemeValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Cookies.get('theme')])
+
   const globalTheme = useMemo(
     () => ({
       theme: themeValue,
@@ -92,6 +102,15 @@ const MyApp = ({
     }),
     [setThemeCallback, themeValue]
   )
+
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <CacheProvider value={emotionCache}>
@@ -103,27 +122,6 @@ const MyApp = ({
       </AppContext.Provider>
     </CacheProvider>
   )
-}
-
-// export function getServerSideProps({ req }: GetServerSidePropsContext) {
-//   const cookies = req.cookies
-//   console.log('in serverSideProps', cookies)
-
-//   return { props: { cookies } }
-// }
-
-MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
-  let pageProps = {}
-  if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps(ctx)
-  }
-  // const cookies = ctx.req ? getCookieParser(ctx.req?.headers)() : Cookies.get()
-  return {
-    pageProps: {
-      ...pageProps,
-      cookies: {},
-    },
-  }
 }
 
 export default api.withTRPC(MyApp)

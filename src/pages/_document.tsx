@@ -12,7 +12,6 @@ import createEmotionServer from '@emotion/server/create-instance'
 import { type AppType } from 'next/app'
 import { type MyAppProps } from './_app'
 import createEmotionCache from '~/config/createEmotionCache'
-
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[]
 }
@@ -97,5 +96,6 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   return {
     ...initialProps,
     emotionStyleTags,
+    // cookies,
   }
 }
