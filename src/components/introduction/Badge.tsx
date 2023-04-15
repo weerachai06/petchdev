@@ -5,6 +5,8 @@ export type TBadge = {
   image: string
   id: string
   alt: string
+  width: number
+  height: number
 }
 
 type TBadegesProps = {
@@ -21,8 +23,8 @@ export default function Badges({ badges }: TBadegesProps) {
         return (
           <Image
             src={badge?.image}
-            width={100}
-            height={22}
+            width={badge.width}
+            height={badge.height}
             alt={badge.alt}
             key={badge.id}
           />

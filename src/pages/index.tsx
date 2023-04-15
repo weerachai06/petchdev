@@ -18,18 +18,24 @@ const Home: NextPage = () => {
       {
         alt: 'Typescript',
         id: randomId(),
+        width: 100,
+        height: 22,
         image:
           'https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white',
       },
       {
         alt: 'JavaScript',
         id: randomId(),
+        width: 100,
+        height: 22,
         image:
           'https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E',
       },
       {
         alt: 'Firebase',
         id: randomId(),
+        width: 84.61,
+        height: 22,
         image:
           'https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white',
       },
@@ -67,6 +73,7 @@ const Home: NextPage = () => {
       >
         <div className="fixed right-4 top-4">
           <button
+            aria-label="Change Mode"
             className={clsx(
               'rounded-full',
               'px-10',
