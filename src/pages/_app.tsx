@@ -13,6 +13,7 @@ import '~/styles/globals.css'
 // import { getCookieParser } from 'next/dist/server/api-utils'
 import Cookies from 'js-cookie'
 import { createContext, useCallback, useMemo, useState } from 'react'
+import { getCookieParser } from 'next/dist/server/api-utils'
 
 type TThemeCallback = (theme: 'dark' | 'light') => void
 
@@ -104,7 +105,7 @@ const MyApp = ({
   )
 }
 
-/* MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
+MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
   let pageProps = {}
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx)
@@ -116,6 +117,6 @@ const MyApp = ({
       cookies,
     },
   }
-} */
+}
 
 export default api.withTRPC(MyApp)
