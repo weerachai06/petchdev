@@ -105,16 +105,23 @@ const MyApp = ({
   )
 }
 
+// export function getServerSideProps({ req }: GetServerSidePropsContext) {
+//   const cookies = req.cookies
+//   console.log('in serverSideProps', cookies)
+
+//   return { props: { cookies } }
+// }
+
 MyApp.getInitialProps = async ({ Component, ctx }: app.AppContext) => {
   let pageProps = {}
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx)
   }
-  const cookies = ctx.req ? getCookieParser(ctx.req?.headers)() : Cookies.get()
+  // const cookies = ctx.req ? getCookieParser(ctx.req?.headers)() : Cookies.get()
   return {
     pageProps: {
       ...pageProps,
-      cookies,
+      cookies: {},
     },
   }
 }
