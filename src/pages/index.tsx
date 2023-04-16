@@ -11,7 +11,6 @@ import { AppContext } from './_app'
 
 const Home: NextPage = () => {
   const themeContext = useContext(AppContext)
-  // const [themeContext.theme] = useState<'dark' | 'light'>('light')
   const badges = useMemo<TBadge[]>(() => {
     const randomId = () => (Math.random() + 1).toString(36).substring(8)
     return [
@@ -151,7 +150,7 @@ const Home: NextPage = () => {
                 <li>🔭 I’m currently working on King Power Click</li>
                 <li>
                   🌱 I’m currently learning flutter, docker, trpc and advanced
-                  typescript - Test
+                  typescript
                 </li>
               </ul>
               <div className="inline-flex justify-center gap-2 text-center">
@@ -169,9 +168,8 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps<{
   cookies: { [key: string]: unknown }
-  // eslint-disable-next-line @typescript-eslint/require-await
 }> = async (ctx) => {
-  const cookies = ctx.req.cookies
+  const cookies = await Promise.resolve(ctx.req.cookies)
   return {
     props: {
       cookies,
