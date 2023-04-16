@@ -14,11 +14,6 @@ RUN pnpm build
 FROM base as deploy
 WORKDIR /usr/src/app
 
-ENV DATABASE_URL file:./db.sqlite
-ENV NEXTAUTH_SECRET ""
-ENV NEXTAUTH_URL "http://localhost:3000"
-ENV DISCORD_CLIENT_ID ""
-ENV DISCORD_CLIENT_SECRET ""
 ENV NODE_ENV "production"
 ENV PORT 3000
 COPY --from=builder /usr/src/app/ .
