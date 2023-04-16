@@ -11,7 +11,7 @@ jobs:
     name: Setup Gcloud Account
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+      IMAGE_NAME: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
     steps:
       - name: Login
         uses: google-github-actions/setup-gcloud@v0
@@ -21,7 +21,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Configure Docker
-        run: gcloud auth configure-docker --quiet
+        run: echo $IMAGE_NAME && gcloud auth configure-docker --quiet
 
       - name: Checkout repository
         uses: actions/checkout@v2
