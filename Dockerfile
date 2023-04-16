@@ -7,16 +7,16 @@ RUN npm install -g pnpm
 
 FROM base as builder
 WORKDIR /usr/src/app
+# copy .env.example as .env to the release build
 COPY . .
 RUN  pnpm install
+COPY --from=build /usr/src/app/.env.example ./.env
 RUN pnpm build
 
 FROM base as deploy
 WORKDIR /usr/src/app
 ENV NODE_ENV "production"
 ENV PORT 3000
-# copy .env.example as .env to the release build
-COPY --from=build /usr/src/app/.env.example ./.env
 COPY --from=builder /usr/src/app/ .
 
 EXPOSE 3000
