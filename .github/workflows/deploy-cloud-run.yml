@@ -27,7 +27,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build . -t $IMAGE_NAME
+        run: docker build . -t $IMAGE_NAME \
+          --build-arg database_url=file:./db.sqlite \
+          --build-arg nextauth_secret=" " \
+          --build-arg nextauth_url=http://localhost:3000 \
+          --build-arg discord_client_id=" " \
+          --build-arg discord_client_secret=" "
 
       - name: Push Docker image
         run: docker push $IMAGE_NAME
