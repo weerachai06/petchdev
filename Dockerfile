@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 # copy .env.example as .env to the release build
 COPY . .
 RUN  pnpm install
-COPY --from=build /usr/src/app/.env.example ./.env
+COPY .env.example ./.env
 RUN pnpm build
 
 FROM base as deploy
