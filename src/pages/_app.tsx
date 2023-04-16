@@ -10,9 +10,8 @@ import { Roboto } from 'next/font/google'
 import { createTheme } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 import '~/styles/globals.css'
-// import { getCookieParser } from 'next/dist/server/api-utils'
 import Cookies from 'js-cookie'
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useMemo, useState } from 'react'
 
 type TThemeCallback = (theme: 'dark' | 'light') => void
 
@@ -66,13 +65,8 @@ const MyApp = ({
   pageProps: { cookies, ...pageProps },
 }: MyAppPropsWithPageProps) => {
   const [themeValue, setThemeValue] = useState<TThemeValue>(() => {
-    if (!cookies || !('theme' in cookies)) {
-      return 'light'
-    }
     return cookies?.['theme'] ?? 'light'
   })
-
-  const [mounted, setMounted] = useState(false)
 
   const setThemeCallback = useCallback((theme: TThemeValue): void => {
     setThemeValue((currentTheme) => {
@@ -86,15 +80,6 @@ const MyApp = ({
     })
   }, [])
 
-  useEffect(() => {
-    const newTheme = Cookies.get('theme')
-    if (!newTheme) {
-      return
-    }
-    return setThemeValue(newTheme as TThemeValue)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Cookies.get('theme')])
-
   const globalTheme = useMemo(
     () => ({
       theme: themeValue,
@@ -102,15 +87,6 @@ const MyApp = ({
     }),
     [setThemeCallback, themeValue]
   )
-
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
 
   return (
     <CacheProvider value={emotionCache}>

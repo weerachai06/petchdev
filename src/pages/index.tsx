@@ -1,4 +1,4 @@
-import { type NextPage } from 'next'
+import { GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { LightMode as LightModeIcon } from '@mui/icons-material'
@@ -166,3 +166,15 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps<{
+  cookies: { [key: string]: unknown }
+  // eslint-disable-next-line @typescript-eslint/require-await
+}> = async (ctx) => {
+  const cookies = ctx.req.cookies
+  return {
+    props: {
+      cookies,
+    },
+  }
+}
