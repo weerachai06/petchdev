@@ -24,5 +24,5 @@ EXPOSE 3000
 CMD ["pnpm", "start"]
 
 # https://stackoverflow.com/questions/66127933/cloud-run-failed-to-start-and-then-listen-on-the-port-defined-by-the-port-envi
-# Build on lodal development using command below
+# Build a local development environment using the below command
 # `docker build ./ --platform linux/amd64 -t asia.gcr.io/petchdev/petchdev`
