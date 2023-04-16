@@ -151,7 +151,7 @@ const Home: NextPage = () => {
                 <li>🔭 I’m currently working on King Power Click</li>
                 <li>
                   🌱 I’m currently learning flutter, docker, trpc and advanced
-                  typescript
+                  typescript - Test
                 </li>
               </ul>
               <div className="inline-flex justify-center gap-2 text-center">
