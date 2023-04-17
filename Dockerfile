@@ -17,11 +17,13 @@ FROM base as deploy
 WORKDIR /usr/src/app
 ENV NODE_ENV "production"
 ENV PORT 3000
-COPY --from=builder /usr/src/app/ .
+COPY --from=builder /usr/src/app/public ./public
+COPY --from=builder /usr/src/app/.next/standalone ./
+COPY --from=builder /usr/src/app/.next/static ./.next/static
 
 EXPOSE 3000
 
-CMD ["pnpm", "start"]
+CMD ["node", "server.js"]
 
 # https://stackoverflow.com/questions/66127933/cloud-run-failed-to-start-and-then-listen-on-the-port-defined-by-the-port-envi
 # Build a local development environment using the below command
