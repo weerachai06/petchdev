@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import React from 'react'
+import { ReactSVG } from 'react-svg'
 
 export type TBadge = {
   image: string
@@ -21,12 +21,12 @@ export default function Badges({ badges }: TBadegesProps) {
     <>
       {badges?.map((badge) => {
         return (
-          <Image
-            src={badge?.image}
-            width={badge.width}
-            height={badge.height}
-            alt={badge.alt}
+          <ReactSVG
             key={badge.id}
+            src={badge.image}
+            height={badge.height}
+            aria-label={badge.alt}
+            style={{ height: badge.height, width: 'auto' }}
           />
         )
       })}

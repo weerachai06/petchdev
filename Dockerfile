@@ -15,11 +15,19 @@ RUN pnpm build
 
 FROM base as deploy
 WORKDIR /usr/src/app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /usr/src/app/public ./public
+
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/static ./.next/static
+
+USER nextjs
+
 ENV NODE_ENV "production"
 ENV PORT 3000
-COPY --from=builder /usr/src/app/public ./public
-COPY --from=builder /usr/src/app/.next/standalone ./
-COPY --from=builder /usr/src/app/.next/static ./.next/static
 
 EXPOSE 3000
 
